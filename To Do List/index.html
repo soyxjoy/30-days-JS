@@ -10,7 +10,7 @@
   <style>
     html {
       font-family: sans-serif;
-      background: #ffc600;
+      background: #00d9ff;
     }
 
     .inbox {
@@ -57,7 +57,8 @@
    When a user clicks a checkbox, holds Shift, and then clicks another checkbox a few rows down, all the checkboxes inbetween those two checkboxes should be checked.
 
   -->
-  <div class="inbox">
+  <button id="actionButton">Add Item</button>
+  <div class="inbox" id="inbox">
     <div class="item">
       <input type="checkbox">
       <p>This is an inbox layout.</p>
@@ -97,8 +98,10 @@
   </div>
 
   <script>
-    const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
     let lastChecked;
+
+    document.getElementById('actionButton').onclick = addItem;
+    var checkboxes = updateItemList()
 
     function handleCheck(e) {
       let inBetween = false;
@@ -119,7 +122,31 @@
       lastChecked = this;
     }
 
-    checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck));
+    function addItem(e) {
+      var text = document.createTextNode("test input");
+      var para = document.createElement("p");
+      para.appendChild(text);
+
+      var checkbox = document.createElement("input")
+      checkbox.setAttribute("type", "checkbox");
+      
+      var taskItem = document.createElement("div")
+      taskItem.setAttribute("class", "item");
+
+      taskItem.appendChild(checkbox)
+      taskItem.appendChild(para)
+
+      var inbox = document.getElementById("inbox");
+      inbox.appendChild(taskItem);
+      checkboxes = updateItemList()
+    }
+
+    function updateItemList() {
+      const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
+      checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck));
+
+      return checkboxes
+    }
   </script>
 </body>
 
